@@ -1,0 +1,66 @@
+<div class="container">
+    <div class="row bg-default">
+        <div *ngIf="artist">
+            <div class="col-md-3">
+                <div *ngIf="artist.images.length > 0">
+                    <img src="{{artist.images[0].url}}" alt="{{artist.name}}" class="img-thumbnail artist-image">
+                </div>
+                <div *ngIf="artist.images.length <= 0">
+                    <img src="../../../images/dvd.png" alt="{{artist.name}}" class="img-thumbnail artist-image">
+                </div>
+            </div>
+            <div class="col-md-9">
+                <h2 class="text-center">{{artist.name | uppercase}}</h2>
+                <table class="table bg-default">
+                    <thead>
+                        <tr>
+                            <th>Type</th>
+                            <th>Genres</th>
+                            <th>Popularity</th>
+                            <th>Loved By</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{artist.type}}</td>
+                            <td>
+                                <span *ngFor="let gens of artist.genres">{{ gens }}</span>
+                                <span class="text-danger" *ngIf="artist.genres.length<=0">unavailable</span></td>
+                            <td>{{artist.popularity}}</td>
+                            <td>{{artist.followers.total}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <hr/>
+    <div class="container">
+        <div class="row">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div *ngIf="artist">{{ artist.name}} Albums</div>
+                </div>
+                <div *ngIf="albums">
+                    <div class="panel-body albums-bg">
+                        <div *ngFor="let album of albums.items">
+                            <div class="media album-list">
+                                <div class="media-left">
+                                    <div *ngIf="album.images.length>0">
+                                        <img class="album-images img-circle" [src]="album.images[0].url" alt="album.name">
+                                    </div>
+                                    <div *ngIf="album.images.length<=0">
+                                        <img class="album-images" src="../../../images/dvd.png" alt="album.name">
+                                    </div>
+                                </div>
+                                <div class="media-body albums-list-content">
+                                    <h4 class="media-heading">{{album.name}}</h4>
+                                    <a  class="btn btn-danger btn-xs" [routerLink]="['/tracks/'+album.id]">Preview Tracks</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

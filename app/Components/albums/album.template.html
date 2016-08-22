@@ -1,0 +1,39 @@
+<div class="container ">
+    <div class="jumbotron jumbo-area text-center">
+        <h2 style="font-weight: bold;" class=""><span class="fa fa-music" style="color: yellow"></span> Collection You <span style="color: orangered" class="glyphicon glyphicon-heart"></span></h2>
+        <p style="text-size: 20px;" class="text-warning">Seach for the best music <span class="fa fa-spinner fa-2x fa-spin" *ngIf="contentIsLoading"></span></p> 
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2">                
+                <div class="input-group">
+                    <div class="input-group-addon"><span class="fa fa-headphones"></span></div>
+                <input id="searchMusic" type="text" class="form-control text-center" placeholder="Search by {{searchType | lowercase }} name">
+                    <div class="input-group-btn">
+                        <button class="btn btn-danger">Go</button>
+                    </div>
+                    <!-- /btn-group -->
+                </div>
+                <!-- /input-group -->
+            </div>
+            <!-- /.col-lg-6 -->
+        </div>
+    </div>
+
+    <div *ngIf="artists">
+        <div *ngFor="let artist of artists" class="search-list">
+            <div class="col-md-3">
+                <div class="panel panel-danger panel-hacked">
+                    <div class="panel-heading bg-primary search-list-heading text-center">
+                       <strong> {{artist.name | uppercase}} </strong>
+                    </div>
+                    <div class="panel-body text-center">
+                        <p><strong>Genres: </strong> <i *ngFor="let genre of artist.genres">{{genre}} </i> <i *ngIf="artist.genres.length<=0">not available</i> </p>
+                        <p><strong>Type: </strong> {{artist.type}}</p>
+                        <p><strong>Loved By: </strong> {{artist.followers.total}} </p>
+                        <a [routerLink]="['/artist/:'+artist.id]" class="pull-left text-primary">Details</a>
+                        <span [ngClass]="{'text-danger': componentIsLiked}" class="fa fa-heart pull-right" (click)="likeMusic()"></span> 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

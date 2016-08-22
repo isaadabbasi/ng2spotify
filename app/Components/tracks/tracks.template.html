@@ -1,0 +1,71 @@
+<div class="container"> 
+    <div class="row bg-default">
+        <div *ngIf="tracks">
+            <div class="col-md-3">
+                <div *ngIf="tracks.images.length > 0">
+                    <img src="{{tracks.images[0].url}}" alt="{{tracks.name}}" class="img-thumbnail artist-image">
+                </div>
+                <div *ngIf="tracks.images.length <= 0">
+                    <img src="../../../images/dvd.png" alt="{{tracks.name}}" class="img-thumbnail artist-image">
+                </div>
+            </div>
+            <div class="col-md-9">
+                <h2 class="text-center">{{tracks.name | uppercase}}</h2>
+                <table class="table bg-default">
+                    <thead>
+                        <tr>
+                            <th>Artist</th>
+                            <th>Genres</th>
+                            <th>Popularity</th>
+                            <th>Release</th>
+                            <th>T.Tracks</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{tracks.artists[0].name}}</td>
+                            <td>
+                                <span *ngFor="let gens of tracks.genres">{{ gens }}</span>
+                                <span class="text-danger" *ngIf="tracks.genres.length<=0">unavailable</span></td>
+                            <td>{{tracks.popularity}}</td>
+                            <td>{{tracks.release_date}}</td>
+                            <td>{{tracks.tracks.items.length}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <hr/>
+    <div class="container">
+        <div class="row">
+        <span *ngIf="!tracks" class="fa fa-spinner fa-5x fa-spin text-center"> </span> <span>Content is loading please wait...</span>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div *ngIf="tracks">{{ tracks.name | lowercase }} tracks</div>
+                </div>
+                <div *ngIf="tracks">
+                    <div class="panel-body albums-bg">
+                        <div *ngFor="let track of tracks.tracks.items">
+                            <div class="media album-list">
+                                <div class="media-left">
+                                    <div *ngIf="tracks.images.length>0">
+                                        <img class="album-images img-circle" [src]="tracks.images[0].url" alt="track.name">
+                                    </div>
+                                    <div *ngIf="tracks.images.length<=0">
+                                        <img class="album-images" src="../../../images/dvd.png" alt="track.name">
+                                    </div>
+                                </div>
+                                <div class="media-body albums-list-content">
+                                    <h4 class="media-heading">{{track.name}}</h4>
+                                    <p style="margin:0px">{{ ((track.duration_ms/1000)/60).toFixed(2) }}</p>
+                                    <a class="btn btn-danger btn-xs" href="{{track.preview_url}}" target="_blank">Preview Tracks</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
